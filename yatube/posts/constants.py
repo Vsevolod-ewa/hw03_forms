@@ -1,1 +1,2 @@
 MAX_POST = 10
+MAX_COUNT = 15
