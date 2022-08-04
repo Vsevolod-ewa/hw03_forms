@@ -19,6 +19,4 @@ urlpatterns = [
             template_name='users/password_reset_form.html'),
         name='password_reset_form'
     ),
-    # path('create/', views.PostView.as_view(), name='post_create')
-    # path('create/', BlogCreateView.as_view(), name='post_create')
 ]

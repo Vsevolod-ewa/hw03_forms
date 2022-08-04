@@ -16,32 +16,20 @@
             Редактировать пост
           {% else %}
           Новый пост
-        {% endif %}            
+          {% endif %}            
         </div>
         <div class="card-body">
-          <form method="POST" class="post-form">{% csrf_token %}
-             {% for field in form %} 
-                <div class="form-group row my-3">
-                  <label for="{{ field.id_for_label }}">
-                    {{ field.label }}
-                      {% if field.field.required %}
-                        <span class="required text-danger">*</span>
-                      {% endif %}
-                  </label>
-                  
-                  {# К полю ввода добавляем атрибут class #}
-                  {{ field}} 
-                  
-                    {% if field.help_text %}
-                      <small 
-                         id="{{ field.id_for_label }}-help"
-                         class="form-text text-muted"
-                      >
-                        {{ field.help_text|safe }}
-                      </small>
-                    {% endif %}
-                </div>
-              {% endfor %}
+          {% include 'includes/errors.html' %}
+          {% if is_edit %}
+          <form action="{% url 'posts:post_edit' post.id %}" method="POST"  class="post-form"
+          >
+          {% csrf_token %}
+          {% else %}
+          <form action="{% url 'posts:post_create'%}" method="POST"  class="post-form"
+          >
+          {% csrf_token %}
+          {% endif %}
+             {% include 'includes/form_fields.html' %}
             <button type="submit" class="btn btn-primary">
               {% if is_edit %}
                 Добавить

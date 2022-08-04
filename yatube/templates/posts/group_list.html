@@ -27,7 +27,9 @@
         </p>
         <ul>
           <li>
+            {% if post.group %}
          <a href="{% url 'posts:post_detail' post.id %}">подробная информация </a>
+         {% endif %}
           </li>
           <li>
           {% if post.group %}   
