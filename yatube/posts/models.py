@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from posts.constants import MAX_COUNT
+from posts.constants import MAX_SHOW_CHAR
 
 User = get_user_model()
 
@@ -27,13 +27,13 @@ class Post(models.Model):
     )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE,
-        related_name='author',
+        related_name='posts',
         verbose_name="автор",
     )
     group = models.ForeignKey(
         Group, on_delete=models.SET_NULL,
         blank=True, null=True,
-        related_name='group',
+        related_name='posts',
         verbose_name="группа",
     )
 
@@ -41,4 +41,4 @@ class Post(models.Model):
         ordering = ('-pub_date', )
 
     def __str__(self):
-        return self.text[:MAX_COUNT]
+        return self.text[:MAX_SHOW_CHAR]
