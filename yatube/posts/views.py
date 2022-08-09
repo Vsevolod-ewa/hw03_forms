@@ -43,7 +43,8 @@ def profile(request, username):
 def post_detail(request, post_id):
     '''Страница для просмотра одного поста'''
     post = get_object_or_404(Post, pk=post_id)
-    context = {'post': post, }
+    posts_count = Post.objects.filter(author=post.author)
+    context = {'post': post, 'posts_count': posts_count, }
 
     return render(request, 'posts/post_detail.html', context)
 
