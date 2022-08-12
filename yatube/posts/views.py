@@ -30,7 +30,8 @@ def group_posts(request, slug):
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
-    posts = author.posts.select_related('group', 'author')
+    posts = Post.objects.filter(author=author)
+    # posts = author.author.select_related('group', 'author')
     page_obj = make_paginator(posts, request)
     context = {
         'author': author,
@@ -43,8 +44,7 @@ def profile(request, username):
 def post_detail(request, post_id):
     '''Страница для просмотра одного поста'''
     post = get_object_or_404(Post, pk=post_id)
-    posts_count = Post.objects.filter(author=post.author)
-    context = {'post': post, 'posts_count': posts_count, }
+    context = {'post': post, }
 
     return render(request, 'posts/post_detail.html', context)
 
@@ -67,7 +67,7 @@ def post_edit(request, post_id):
     '''Это представление редактирует запись по ее идентификатору
    и сохраняет изменения в базе данных.'''
     post = get_object_or_404(Post, pk=post_id)
-    form = PostForm(request.POST or None)
+    form = PostForm(request.POST, instance=post)
     if request.method == "POST" and form.is_valid():
         if post.author == request.user:
             post = form.save(commit=False)
