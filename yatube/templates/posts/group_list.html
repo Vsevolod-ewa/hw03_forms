@@ -29,9 +29,11 @@
           <li>
          <a href="{% url 'posts:post_detail' post.id %}">подробная информация </a>
           </li>
-          <li>
+          {% comment %} <li>
         <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
-          </li>
+          </li> {% endcomment %}
+          {% comment %} Комментарий для Ритиса, по шаблонам которые нам дали эта ссылка есть,
+          но в целом она не имеет смысла здесь {% endcomment %}
       </article>
         {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
